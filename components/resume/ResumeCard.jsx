@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useRouter } from "next/router";
 
 /**
  * Relative time helper — "2 minutes ago", "yesterday", etc.
@@ -46,7 +45,6 @@ export default function ResumeCard({
     const [deleteConfirm, setDeleteConfirm] = useState(false);
     const menuRef = useRef(null);
     const renameRef = useRef(null);
-    const router = useRouter();
 
     // Sync name if external rename happens
     useEffect(() => setNameValue(resume.name), [resume.name]);
@@ -77,8 +75,6 @@ export default function ResumeCard({
     const handleCardClick = () => {
         if (renaming || menuOpen) return;
         onLoad(resume.id);
-        // If on home page, navigate to builder
-        if (router.pathname === "/") router.push(`/builder?resume=${resume.id}`);
     };
 
     const handlePrint = () => {

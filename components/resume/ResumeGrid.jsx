@@ -59,7 +59,7 @@ export default function ResumeGrid({
                         key={resume.id}
                         resume={resume}
                         isActive={resume.id === activeResumeId}
-                        onLoad={(id) => { onLoad(id); router.push(`/builder?resume=${id}`); }}
+                        onLoad={onLoad}
                         onRename={onRename}
                         onDuplicate={onDuplicate}
                         onDelete={onDelete}
