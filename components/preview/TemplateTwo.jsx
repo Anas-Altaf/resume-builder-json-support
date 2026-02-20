@@ -6,14 +6,14 @@ import { CgWebsite } from "react-icons/cg";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Certification from "./Certification";
 
-const TemplateTwo = ({ 
-  namedata, 
-  positiondata, 
-  contactdata, 
-  emaildata, 
-  addressdata, 
-  telicon, 
-  emailicon, 
+const TemplateTwo = ({
+  namedata,
+  positiondata,
+  contactdata,
+  emaildata,
+  addressdata,
+  telicon,
+  emailicon,
   addressicon,
   summarydata,
   educationdata,
@@ -44,7 +44,7 @@ const TemplateTwo = ({
     .filter(section => section !== undefined);
 
   const renderSection = (section) => {
-    switch(section.id) {
+    switch (section.id) {
       case "certifications":
         return (
           <div>
@@ -221,11 +221,6 @@ const TemplateTwo = ({
     return url.split('/').pop();
   };
 
-  if (certificationsdata) {
-    console.log("Certifications data exists:", certificationsdata);
-    console.log("Section order includes certifications:", sectionOrder.includes("certifications"));
-    console.log("Ordered sections:", orderedSections);
-  }
 
   return (
     <div className="w-full h-full bg-white p-4">
@@ -278,9 +273,11 @@ const TemplateTwo = ({
                     <div
                       ref={provided.innerRef}
                       {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      className={`mb-2 ${snapshot.isDragging ? "bg-gray-50" : ""}`}
+                      className={`mb-2 ${snapshot.isDragging ? "outline-dashed outline-2 outline-blue-300 bg-gray-50" : ""}`}
                     >
+                      <div {...provided.dragHandleProps} className="cursor-grab exclude-print select-none text-gray-300 hover:text-gray-500 float-right text-lg leading-none" title="Drag to reorder section">
+                        &#8801;
+                      </div>
                       {renderSection(section)}
                     </div>
                   )}

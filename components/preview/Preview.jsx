@@ -139,15 +139,37 @@ const Preview = () => {
   };
 
   const handleTemplateTwoDragEnd = (result) => {
-    if (!result.destination) return;
+    const { destination, source } = result;
+    if (!destination) return;
+    if (destination.droppableId === source.droppableId && destination.index === source.index) return;
 
-    const items = Array.from(sectionOrder);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
+    // Section-level reorder
+    if (source.droppableId === "sections") {
+      const items = Array.from(sectionOrder);
+      const [reorderedItem] = items.splice(source.index, 1);
+      items.splice(destination.index, 0, reorderedItem);
+      setSectionOrder(items);
+      localStorage.setItem('sectionOrder', JSON.stringify(items));
+      return;
+    }
 
+    // Work experience entries
+    if (source.droppableId === "work-experience") {
+      const newWorkExperience = [...resumeData.workExperience];
+      const [removed] = newWorkExperience.splice(source.index, 1);
+      newWorkExperience.splice(destination.index, 0, removed);
+      setResumeData({ ...resumeData, workExperience: newWorkExperience });
+      return;
+    }
 
-    setSectionOrder(items);
-    localStorage.setItem('sectionOrder', JSON.stringify(items));
+    // Project entries
+    if (source.droppableId === "projects") {
+      const newProjects = [...resumeData.projects];
+      const [removed] = newProjects.splice(source.index, 1);
+      newProjects.splice(destination.index, 0, removed);
+      setResumeData({ ...resumeData, projects: newProjects });
+      return;
+    }
   };
 
   useEffect(() => {
