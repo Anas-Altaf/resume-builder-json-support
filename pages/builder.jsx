@@ -1,4 +1,5 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
+import { useRouter } from "next/router";
 import Language from "../components/form/Language";
 import Meta from "../components/meta/Meta";
 import FormCP from "../components/form/FormCP";
@@ -16,6 +17,8 @@ import dynamic from "next/dynamic";
 import Certification from "../components/form/certification";
 import { SparklesCore } from "../components/ui/sparkles";
 import AIAnalysis from "../components/ai/AIAnalysis";
+import ResumeSidebar from "../components/resume/ResumeSidebar";
+import useResumes from "../hooks/useResumes";
 
 const ResumeContext = createContext(DefaultResumeData);
 
@@ -24,30 +27,66 @@ const Print = dynamic(() => import("../components/utility/WinPrint"), {
   ssr: false,
 });
 
-export default function Builder(props) {
-  // resume data
-  const [resumeData, setResumeData] = useState(DefaultResumeData);
+export default function Builder() {
+  const router = useRouter();
 
-  // form hide/show
+  // ── Resume state ───────────────────────────────────────────────────────────
+  const [resumeData, setResumeData] = useState(DefaultResumeData);
   const [formClose, setFormClose] = useState(false);
 
-  // profile picture
+  // ── Resume manager ─────────────────────────────────────────────────────────
+  const {
+    resumes,
+    activeResumeId,
+    saveStatus,
+    createResume,
+    loadResume,
+    renameResume,
+    duplicateResume,
+    deleteResume,
+    ensureActiveResume,
+  } = useResumes(resumeData, setResumeData);
+
+  // ── Load resume from URL param (?resume=<id>) ─────────────────────────────
+  useEffect(() => {
+    const { resume: idFromUrl, action } = router.query;
+    if (idFromUrl && idFromUrl !== activeResumeId) {
+      loadResume(idFromUrl);
+      if (action === "print") {
+        setTimeout(() => window.print(), 600);
+      }
+    }
+  }, [router.query]);
+
+  // ── Ensure new sessions get a resume slot created ─────────────────────────
+  // After hook bootstraps: if no resume exists at all, create one on first real edit
+  const handleChange = (e) => {
+    ensureActiveResume();
+    setResumeData({ ...resumeData, [e.target.name]: e.target.value });
+  };
+
   const handleProfilePicture = (e) => {
     const file = e.target.files[0];
-
     if (file instanceof Blob) {
+      ensureActiveResume();
       const reader = new FileReader();
       reader.onload = (event) => {
         setResumeData({ ...resumeData, profilePicture: event.target.result });
       };
       reader.readAsDataURL(file);
-    } else {
-      console.error("Invalid file type");
     }
   };
 
-  const handleChange = (e) => {
-    setResumeData({ ...resumeData, [e.target.name]: e.target.value });
+  // ── Print helper: load resume then print ─────────────────────────────────
+  const handlePrint = (id) => {
+    loadResume(id);
+    // Small delay to let state flush before triggering print
+    setTimeout(() => window.print(), 300);
+  };
+
+  // ── Create new and stay on builder ────────────────────────────────────────
+  const handleCreate = () => {
+    createResume();
   };
 
   return (
@@ -65,6 +104,20 @@ export default function Builder(props) {
           description="free resume maker for humanity."
           keywords="ATS-friendly, Resume optimization, Keyword-rich resume, ATS resume builder, ATS resume templates, ATS-compliant resume, ATS-optimized CV, ATS-friendly format, ATS resume tips, Resume writing services, Career guidance, Job search in India, Resume tips for India, Professional resume builder, Cover letter writing, Interview preparation, Job interview tips, Career growth, Online job applications, resume builder, free resume builder, resume ats, best free resume builder, resume creator, resume cv, resume design, resume editor, resume maker"
         />
+
+        {/* Resume sidebar — collapsible, default collapsed */}
+        <ResumeSidebar
+          resumes={resumes}
+          activeResumeId={activeResumeId}
+          saveStatus={saveStatus}
+          onLoad={loadResume}
+          onRename={renameResume}
+          onDuplicate={duplicateResume}
+          onDelete={deleteResume}
+          onPrint={handlePrint}
+          onCreate={handleCreate}
+        />
+
         <div className="f-col gap-4 md:flex-row justify-evenly max-w-full md:mx-auto md:h-screen">
           {!formClose && (
             <div className="relative w-full h-full md:overflow-y-scroll exclude-print bg-black">
@@ -80,6 +133,19 @@ export default function Builder(props) {
                 />
               </div>
               <form className="relative z-10 p-4 bg-black/30">
+                {/* Save status indicator */}
+                {saveStatus !== "idle" && (
+                  <div className="mb-3 text-center">
+                    <span
+                      className={`text-xs px-3 py-1 rounded-full ${saveStatus === "saving"
+                        ? "bg-yellow-900/40 text-yellow-400"
+                        : "bg-green-900/40 text-green-400"
+                        }`}
+                    >
+                      {saveStatus === "saving" ? "⏳ Saving…" : "✓ Saved"}
+                    </span>
+                  </div>
+                )}
                 <LoadUnload />
                 <PersonalInformation />
                 <SocialMedia />
@@ -88,10 +154,7 @@ export default function Builder(props) {
                 <WorkExperience />
                 <Projects />
                 {resumeData.skills.map((skill, index) => (
-                  <Skill
-                    title={skill.title}
-                    key={index}
-                  />
+                  <Skill title={skill.title} key={index} />
                 ))}
                 <Language />
                 <Certification />
@@ -107,4 +170,5 @@ export default function Builder(props) {
     </>
   );
 }
+
 export { ResumeContext };
