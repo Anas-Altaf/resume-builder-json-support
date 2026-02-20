@@ -35,7 +35,7 @@
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/HOTHEAD01TH/free-resume-maker.git
+git clone https://github.com/Anas-Altaf/resume-builder-json-support.git
 ```
 
 2. Navigate to the project directory:

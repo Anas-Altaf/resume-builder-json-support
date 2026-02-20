@@ -12,7 +12,7 @@ export default function Hero() {
         <div className="h-screen relative w-full bg-black flex flex-col items-center justify-center overflow-hidden rounded-md">
             {/* GitHub Star Button */}
             <a
-                href="https://github.com/HOTHEAD01TH/free-resume-maker"
+                href="https://github.com/Anas-Altaf/resume-builder-json-support.git"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="absolute top-4 right-4 z-50 inline-flex items-center gap-2 rounded-lg border border-slate-800 bg-black px-4 py-2 text-sm text-slate-300 transition-colors hover:bg-slate-800"

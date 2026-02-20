@@ -1,116 +1,140 @@
 const DefaultResumeData = {
-  name: "ZAID ADIL",
-  position: "Full Stack Developer",
+  name: "Anas Altaf",
+  position: "DevOps Engineer | AWS",
   fontFamily: "Georgia, serif",
-  contactInformation: "+91 123456789",
-  email: "hothead01th@gmail.com",
-  address: "Kashmir, India",
+  contactInformation: "+92-310-4889407",
+  email: "me@anasaltaf.dev",
+  address: "Faisalabad, Pakistan",
   profilePicture: "",
   socialMedia: [
     {
       socialMedia: "Github",
-      link: "github.com//HOTHEAD01TH",
+      link: "github.com/Anas-Altaf",
     },
     {
       socialMedia: "LinkedIn",
-      link: "linkedin.com/in/hothead01th",
+      link: "linkedin.com/in/anasaltaf",
     },
     {
       socialMedia: "Website",
-      link: "hothead.vercel.app",
+      link: "anasaltaf.dev",
     },
   ],
-  summary: "A Full Stack Developer with 3 years of experience in web development, specializing in building dynamic and responsive web applications. Passionate about Web3 and DevOps, with a keen interest in decentralized technologies and automation in the development process. Skilled in both front-end and back-end development, with a focus on delivering efficient and scalable solutions.",
+  summary: "Results-oriented DevOps Engineer with one year of freelance experience in designing, implementing, and managing scalable cloud infrastructure on AWS. Skilled in CI/CD automation, containerization, infrastructure as code, and monitoring. Passionate about optimizing deployment workflows, improving system reliability, and ensuring high availability in production environments.",
   education: [
     {
-      "school": "Kashmir University",
-      "degree": "Bachelors in Computer Application",
-      "startYear": "2022-10-01",
-      "endYear": "2025-07-01"
+      school: "FAST National University of Computer and Emerging Sciences",
+      degree: "Bachelors in Software Engineering",
+      startYear: "2022-08-21",
+      endYear: "2026-06-01",
     },
   ],
   workExperience: [
     {
-      "company": "Techflare",
-      "position": "Full Stack Developer",
-      "description": "Worked as a full stack developer on multiple client projects, focusing on building scalable web applications using modern technologies. Collaborated with cross-functional teams to deliver high-quality solutions.",
-      "keyAchievements": "Successfully delivered 5+ client projects with 100% satisfaction rate\nReduced application load time by 40% through optimization techniques",
-      "startYear": "2023-10-01",
-      "endYear": "2024-03-01"
+      company: "TechXpert",
+      position: "DevOps Engineer",
+      description: "Designed and maintained AWS-based cloud infrastructure for multiple client projects. Automated CI/CD pipelines and managed containerized deployments using Docker and Kubernetes. Implemented monitoring and logging solutions to enhance system reliability.",
+      keyAchievements: "Automated deployment pipelines reducing release time by 60%\nImplemented Infrastructure as Code using Terraform for consistent environment provisioning\nImproved system uptime to 99.9% through proactive monitoring and alerting",
+      startYear: "2023-10-01",
+      endYear: "2024-03-01",
     },
     {
-      "company": "Techbug",
-      "position": "Frontend Developer Intern",
-      "description": "Contributed to the development of user interfaces for various web applications. Worked closely with senior developers to implement responsive designs and improve user experience.",
-      "keyAchievements": "Developed responsive web interfaces using React and Tailwind CSS\nCollaborated with the design team to implement pixel-perfect UI components",
-      "startYear": "2023-06-01",
-      "endYear": "2023-09-01"
-    }
+      company: "Techbug",
+      position: "DevOps Intern",
+      description: "Assisted in managing AWS infrastructure, configuring CI/CD workflows, and supporting containerized application deployments. Worked closely with development teams to streamline build and release processes.",
+      keyAchievements: "Configured Jenkins pipelines for automated testing and deployment\nContainerized applications using Docker for consistent development environments\nMonitored cloud resources and optimized cost usage on AWS",
+      startYear: "2023-06-01",
+      endYear: "2023-09-01",
+    },
+    {
+      company: "TechXpert",
+      position: "Mobile App Developer | React Native",
+      description: "",
+      keyAchievements: "Translated Figma mockups into responsive React Native screens, achieving pixel-perfect fidelity for client demos.\nMet 100% of story points on time through daily Agile participation and sprint planning.\nIntegrated Firebase, Maps, and Camera APIs to deliver complex features that increased beta user engagement.",
+      startYear: "",
+      endYear: "",
+    },
   ],
   projects: [
-
     {
-      "name": "AI Resume Maker",
-      "description": "Developed an intelligent resume builder using Next.js with AI-powered content suggestions, multiple templates, and real-time preview functionality. Integrated with Google's Gemini API for smart content optimization.",
-      "keyAchievements": "Implemented drag-and-drop functionality for section reordering\nIntegrated AI-powered content suggestions using Gemini API",
-      "startYear": "2024-02-20",
-      "endYear": "2024-03-15",
-      "link": "https://github.com/HOTHEAD01TH/free-resume-maker"
+      name: "AWS Scalable Web Infrastructure",
+      description: "Designed and deployed a highly available web application architecture on AWS using EC2, ALB, Auto Scaling Groups, RDS, and S3. Implemented Infrastructure as Code using Terraform and automated CI/CD with Jenkins.",
+      keyAchievements: "Configured Auto Scaling and Load Balancing for high availability\nImplemented Terraform scripts for complete infrastructure provisioning\nIntegrated CloudWatch monitoring with custom alerts",
+      startYear: "2024-02-20",
+      endYear: "2024-03-15",
+      link: "https://github.com/HOTHEAD01TH/aws-scalable-infra",
     },
     {
-      "name": "Paytm",
-      "description": "Created a monorepo-based banking application using Express and AWS services. Implemented microservices architecture with features like transaction management, account services, and real-time notifications.",
-      "keyAchievements": "Designed and implemented microservices architecture using Express\nImplemented real-time transaction notifications using AWS SNS",
-      "startYear": "2024-03-20",
-      "endYear": "2024-04-15",
-      "link": "https://github.com/HOTHEAD01TH/paytm-advanced"
-    }
+      name: "Kubernetes CI/CD Pipeline",
+      description: "Built an end-to-end CI/CD pipeline deploying containerized applications to a Kubernetes cluster on AWS EKS. Integrated GitHub Actions with Docker image builds and automated deployments.",
+      keyAchievements: "Implemented blue-green deployment strategy on Kubernetes\nSecured container images using best practices and vulnerability scanning\nReduced deployment failures by 40% through automated testing stages",
+      startYear: "2024-03-20",
+      endYear: "2024-04-15",
+      link: "https://github.com/HOTHEAD01TH/k8s-cicd-pipeline",
+    },
   ],
   skills: [
     {
       title: "Technical Skills",
       skills: [
-        "React", "Next.js", "TypeScript", "Tailwind CSS", "MongoDB", "PostgreSQL",
-        "Express", "Python", "Java", "Docker", "AWS", "Kubernetes", "Jenkins",
-        "Firebase", "Redis", "Node.js", "Git", "REST API"
-      ]
+        "AWS (EC2, S3, RDS, IAM, VPC, CloudWatch, EKS, ECS, Lambda)",
+        "Docker",
+        "Kubernetes",
+        "Terraform",
+        "Jenkins",
+        "GitHub Actions",
+        "Linux",
+        "Bash Scripting",
+        "Python",
+        "Ansible",
+        "Prometheus",
+        "Grafana",
+        "NGINX",
+        "Apache",
+        "Git",
+        "CI/CD",
+        "Infrastructure as Code",
+        "Microservices Architecture",
+      ],
     },
     {
       title: "Soft Skills",
       skills: [
-        "Collaboration", "Problem-solving", "Communication", "Time management", "Result-oriented"
-      ]
+        "Collaboration",
+        "Problem-solving",
+        "Communication",
+        "Time management",
+        "Analytical thinking",
+      ],
     },
     {
       title: "Additional Skills",
       skills: [
-        "CI/CD", "Microservices", "System Design", "Cloud Architecture"
-      ]
-    }
+        "Cloud Security Best Practices",
+        "Cost Optimization",
+        "System Monitoring",
+        "High Availability Architecture",
+      ],
+    },
   ],
-  languages: [
-    "English",
-    "Hindi",
-    "Urdu",
-    "Kashmiri",
-  ],
+  languages: ["English", "Hindi", "Urdu", "Kashmiri"],
   certifications: [
     {
-      name: "Java and Object-Oriented Programming",
-      issuer: "University of Pennsylvania"
+      name: "AWS Certified Solutions Architect – Associate",
+      issuer: "Amazon Web Services",
     },
     {
-      name: "Introduction to Cloud Computing",
-      issuer: "IBM"
+      name: "AWS Certified DevOps Engineer – Professional",
+      issuer: "Amazon Web Services",
     },
     {
-      name: "Full Stack Development",
-      issuer: "john hopkins university"
+      name: "Docker and Kubernetes: The Complete Guide",
+      issuer: "Udemy",
     },
     {
-      name: "AI Primer Course",
-      issuer: "emly labs"
-    }
+      name: "Terraform for AWS",
+      issuer: "HashiCorp",
+    },
   ],
 };
 
