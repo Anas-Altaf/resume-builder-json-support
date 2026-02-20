@@ -58,13 +58,18 @@ export default function ResumeCard({
     useEffect(() => {
         if (menuOpen && btnRef.current) {
             const rect = btnRef.current.getBoundingClientRect();
-            const menuHeight = 220; // approximate max height of menu
+            const menuWidth = 176; // w-44
+            const menuHeight = 220;
             const spaceBelow = window.innerHeight - rect.bottom;
             const openUpward = spaceBelow < menuHeight;
 
+            // Right-align menu with button, but clamp so it stays in viewport
+            const idealLeft = rect.right - menuWidth;
+            const left = Math.max(8, Math.min(idealLeft, window.innerWidth - menuWidth - 8));
+
             setMenuStyle({
                 position: "fixed",
-                right: window.innerWidth - rect.right,
+                left,
                 ...(openUpward
                     ? { bottom: window.innerHeight - rect.top + 4 }
                     : { top: rect.bottom + 4 }),
