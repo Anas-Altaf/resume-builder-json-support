@@ -5,6 +5,7 @@ import { FaExternalLinkAlt, FaGithub, FaLinkedin, FaTwitter, FaFacebook, FaInsta
 import { CgWebsite } from "react-icons/cg";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Certification from "./Certification";
+import { parseFormatting } from "../../utils/parseFormatting";
 
 const TemplateTwo = ({
   namedata,
@@ -65,7 +66,7 @@ const TemplateTwo = ({
         return (
           <div>
             <h2 className="section-title border-b-2 border-gray-300 mb-1">Summary</h2>
-            <p className="content">{summarydata}</p>
+            <p className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(summarydata) }} />
           </div>
         );
       case "education":
@@ -118,11 +119,11 @@ const TemplateTwo = ({
                               {new Date(project.startYear).getFullYear()} - {new Date(project.endYear).getFullYear()}
                             </p>
                           </div>
-                          <p className="content">{project.description}</p>
+                          <p className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(project.description) }} />
                           {project.keyAchievements && (
                             <ul className="list-disc pl-4 content">
                               {project.keyAchievements.split('\n').map((achievement, i) => (
-                                <li key={i} className="content">{achievement}</li>
+                                <li key={i} className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(achievement) }} />
                               ))}
                             </ul>
                           )}
@@ -162,8 +163,14 @@ const TemplateTwo = ({
                               {new Date(work.startYear).getFullYear()} - {new Date(work.endYear).getFullYear()}
                             </p>
                           </div>
-                          <p className="content">{work.description}</p>
-                          <p className="content">{work.keyAchievements}</p>
+                          <p className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(work.description) }} />
+                          {work.keyAchievements && (
+                            <ul className="list-disc pl-4 content">
+                              {work.keyAchievements.split('\n').map((ach, i) => (
+                                <li key={i} className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(ach) }} />
+                              ))}
+                            </ul>
+                          )}
                         </div>
                       )}
                     </Draggable>

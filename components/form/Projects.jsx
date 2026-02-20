@@ -2,6 +2,7 @@ import FormButton from "./FormButton";
 import React, { useContext } from "react";
 import { ResumeContext } from "../../pages/builder";
 import AISuggestionButton from '../ai/AISuggestionButton';
+import RichTextArea from './RichTextArea';
 
 const Projects = () => {
   const { resumeData, setResumeData } = useContext(ResumeContext);
@@ -63,13 +64,12 @@ const Projects = () => {
               content={project.description}
             />
           </div>
-          <textarea
-            type="text"
+          <RichTextArea
             placeholder="Description"
             name="description"
             className="w-full other-input h-32"
             value={project.description}
-            maxLength="250"
+            maxLength={250}
             onChange={(e) => handleProjects(e, index)}
           />
           <div className="flex justify-between items-center">
@@ -79,9 +79,8 @@ const Projects = () => {
               content={project.keyAchievements}
             />
           </div>
-          <textarea
-            type="text"
-            placeholder="Key Achievements"
+          <RichTextArea
+            placeholder="Key Achievements (one per line)"
             name="keyAchievements"
             className="w-full other-input h-40"
             value={project.keyAchievements}

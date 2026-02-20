@@ -8,6 +8,7 @@ import {
   FaExchangeAlt,
   FaExternalLinkAlt,
 } from "react-icons/fa";
+import { parseFormatting } from "../../utils/parseFormatting";
 import { MdEmail, MdLocationOn, MdPhone } from "react-icons/md";
 import { CgWebsite } from "react-icons/cg";
 import Skills from "./Skills";
@@ -245,7 +246,7 @@ const Preview = () => {
                       <h2 className="section-title mb-1 border-b-2 border-gray-300">
                         Summary
                       </h2>
-                      <p className="content break-words">{resumeData.summary}</p>
+                      <p className="content break-words" dangerouslySetInnerHTML={{ __html: parseFormatting(resumeData.summary) }} />
                     </div>
                   )}
                   <div>
@@ -359,7 +360,7 @@ const Preview = () => {
                                                   endYear={item.endYear}
                                                   id={`work-experience-start-end-date`}
                                                 />
-                                                <p className="content hyphens-auto">{item.description}</p>
+                                                <p className="content hyphens-auto" dangerouslySetInnerHTML={{ __html: parseFormatting(item.description) }} />
                                                 <Droppable
                                                   droppableId={`WORK_EXPERIENCE_KEY_ACHIEVEMENT-${index}`}
                                                   type="WORK_EXPERIENCE_KEY_ACHIEVEMENT"
@@ -388,7 +389,7 @@ const Preview = () => {
                                                                     "outline-dashed outline-2 outline-gray-400 bg-white"
                                                                     }`}
                                                                 >
-                                                                  {achievement}
+                                                                  <span dangerouslySetInnerHTML={{ __html: parseFormatting(achievement) }} />
                                                                 </li>
                                                               )}
                                                             </Draggable>
@@ -457,7 +458,7 @@ const Preview = () => {
                                                   endYear={item.endYear}
                                                   id={`projects-start-end-date`}
                                                 />
-                                                <p className="content">{item.description}</p>
+                                                <p className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(item.description) }} />
                                                 <Droppable
                                                   droppableId={`PROJECTS_KEY_ACHIEVEMENT-${index}`}
                                                   type="PROJECTS_KEY_ACHIEVEMENT"
@@ -486,7 +487,7 @@ const Preview = () => {
                                                                     "outline-dashed outline-2 outline-gray-400 bg-white"
                                                                     }`}
                                                                 >
-                                                                  {achievement}
+                                                                  <span dangerouslySetInnerHTML={{ __html: parseFormatting(achievement) }} />
                                                                 </li>
                                                               )}
                                                             </Draggable>
