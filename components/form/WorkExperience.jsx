@@ -34,8 +34,7 @@ const WorkExperience = () => {
 
   const removeWorkExperience = (index) => {
     const newworkExperience = [...resumeData.workExperience];
-    newworkExperience[index] = newworkExperience[newworkExperience.length - 1];
-    newworkExperience.pop();
+    newworkExperience.splice(index, 1);
     setResumeData({ ...resumeData, workExperience: newworkExperience });
   };
 
@@ -62,9 +61,9 @@ const WorkExperience = () => {
           />
           <div className="flex justify-between items-center">
             <label>Description</label>
-            <AISuggestionButton 
-              section="work experience description" 
-              content={workExperience.description} 
+            <AISuggestionButton
+              section="work experience description"
+              content={workExperience.description}
             />
           </div>
           <textarea
@@ -78,9 +77,9 @@ const WorkExperience = () => {
           />
           <div className="flex justify-between items-center">
             <label>Key Achievements</label>
-            <AISuggestionButton 
-              section="work achievements" 
-              content={workExperience.keyAchievements} 
+            <AISuggestionButton
+              section="work achievements"
+              content={workExperience.keyAchievements}
             />
           </div>
           <textarea

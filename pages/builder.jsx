@@ -15,6 +15,7 @@ import Education from "../components/form/Education";
 import dynamic from "next/dynamic";
 import Certification from "../components/form/certification";
 import { SparklesCore } from "../components/ui/sparkles";
+import AIAnalysis from "../components/ai/AIAnalysis";
 
 const ResumeContext = createContext(DefaultResumeData);
 
@@ -47,7 +48,6 @@ export default function Builder(props) {
 
   const handleChange = (e) => {
     setResumeData({ ...resumeData, [e.target.name]: e.target.value });
-    console.log(resumeData);
   };
 
   return (
@@ -80,7 +80,7 @@ export default function Builder(props) {
                 />
               </div>
               <form className="relative z-10 p-4 bg-black/30">
-                <LoadUnload/>
+                <LoadUnload />
                 <PersonalInformation />
                 <SocialMedia />
                 <Summary />
@@ -101,6 +101,7 @@ export default function Builder(props) {
           <Preview className="w-full h-full" />
         </div>
         <FormCP formClose={formClose} setFormClose={setFormClose} />
+        <AIAnalysis resumeData={resumeData} />
         <Print />
       </ResumeContext.Provider>
     </>

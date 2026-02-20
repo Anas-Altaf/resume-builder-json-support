@@ -1,4 +1,4 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Initialize with API version v1
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -8,7 +8,7 @@ export async function analyzeResume(resumeData) {
     throw new Error("Missing Gemini API key");
   }
 
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
   const prompt = `Analyze this resume data and provide feedback on:
   1. Overall strength and weaknesses
@@ -46,7 +46,7 @@ export async function getSuggestions(section, currentContent) {
 
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    
+
     const prompt = `You are a friendly resume writing assistant. Look at this ${section} content and suggest 2 slightly improved versions. 
     Keep the same meaning and information, but make it flow better. Use natural, conversational language - no complex jargon.
     Make it sound like a real person wrote it.
@@ -72,7 +72,7 @@ export async function getSuggestions(section, currentContent) {
     return result.response.text();
   } catch (error) {
     console.error("Gemini API Error:", error);
-    
+
     // Handle specific API errors
     if (error.message?.includes('quota')) {
       throw new Error("QUOTA_ERROR: API quota exceeded. Please try again later");
@@ -83,7 +83,7 @@ export async function getSuggestions(section, currentContent) {
     if (error.message?.includes('rate')) {
       throw new Error("RATE_ERROR: Too many requests. Please wait a moment");
     }
-    
+
     // Generic error fallback
     throw new Error(`API_ERROR: ${error.message || 'Failed to generate suggestions'}`);
   }

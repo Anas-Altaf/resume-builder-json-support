@@ -31,8 +31,7 @@ const Projects = () => {
 
   const removeProjects = (index) => {
     const newProjects = [...resumeData.projects];
-    newProjects[index] = newProjects[newProjects.length - 1];
-    newProjects.pop();
+    newProjects.splice(index, 1);
     setResumeData({ ...resumeData, projects: newProjects });
   };
 
@@ -44,9 +43,9 @@ const Projects = () => {
           <input
             type="text"
             placeholder="Project Name"
-            name="name"
+            name="title"
             className="w-full other-input"
-            value={project.name}
+            value={project.title}
             onChange={(e) => handleProjects(e, index)}
           />
           <input
@@ -59,9 +58,9 @@ const Projects = () => {
           />
           <div className="flex justify-between items-center">
             <label>Description</label>
-            <AISuggestionButton 
-              section="project description" 
-              content={project.description} 
+            <AISuggestionButton
+              section="project description"
+              content={project.description}
             />
           </div>
           <textarea
@@ -75,9 +74,9 @@ const Projects = () => {
           />
           <div className="flex justify-between items-center">
             <label>Key Achievements</label>
-            <AISuggestionButton 
-              section="project achievements" 
-              content={project.keyAchievements} 
+            <AISuggestionButton
+              section="project achievements"
+              content={project.keyAchievements}
             />
           </div>
           <textarea

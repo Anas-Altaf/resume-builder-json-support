@@ -126,21 +126,17 @@
 
     @page {
         size: A4;
-        margin: 10mm;
+        margin: 0;
+    }
+
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     .preview {
         overflow-y: visible !important;
-    }
-
-    .preview::after {
-        content: "Made using : free-next-resume-maker.vercel.app ";
-        position: fixed;
-        bottom: 0;
-        right: 0;
-        opacity: 0.2;
-        font-size: small;
-        text-align: center;
-        z-index: -1;
+        padding: 0 !important;
+        margin: 0 !important;
     }
 }

@@ -42,7 +42,7 @@ const Skill = ({ title }) => {
         (skillType) => skillType.title === title
       );
       const newSkills = [...skillType.skills];
-      newSkills.pop();
+      newSkills.splice(index, 1);
       const updatedSkills = prevData.skills.map((skill) =>
         skill.title === title ? { ...skill, skills: newSkills } : skill
       );
