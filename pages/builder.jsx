@@ -133,19 +133,20 @@ export default function Builder() {
                 />
               </div>
               <form className="relative z-10 p-4 bg-black/30">
-                {/* Save status indicator */}
-                {saveStatus !== "idle" && (
-                  <div className="mb-3 text-center">
-                    <span
-                      className={`text-xs px-3 py-1 rounded-full ${saveStatus === "saving"
-                        ? "bg-yellow-900/40 text-yellow-400"
-                        : "bg-green-900/40 text-green-400"
-                        }`}
-                    >
-                      {saveStatus === "saving" ? "⏳ Saving…" : "✓ Saved"}
-                    </span>
-                  </div>
-                )}
+                {/* Save status indicator — fixed, no layout shift */}
+                <div
+                  className={`fixed top-3 left-1/2 -translate-x-1/2 z-50 transition-opacity duration-300 exclude-print ${saveStatus !== "idle" ? "opacity-100" : "opacity-0 pointer-events-none"
+                    }`}
+                >
+                  <span
+                    className={`text-xs px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm ${saveStatus === "saving"
+                        ? "bg-yellow-900/70 text-yellow-300"
+                        : "bg-green-900/70 text-green-300"
+                      }`}
+                  >
+                    {saveStatus === "saving" ? "⏳ Saving…" : "✓ Saved"}
+                  </span>
+                </div>
                 <LoadUnload />
                 <PersonalInformation />
                 <SocialMedia />

@@ -18,16 +18,6 @@ function timeAgo(isoString) {
 
 /**
  * ResumeCard — used in sidebar and home page grid.
- *
- * Props:
- *   resume         — { id, name, updatedAt }
- *   isActive       — bool, highlights this card
- *   onLoad(id)     — loads resume into builder
- *   onRename(id, name)
- *   onDuplicate(id)
- *   onDelete(id)
- *   onPrint(id)    — loads + triggers window.print()
- *   compact        — bool, smaller layout for sidebar
  */
 export default function ResumeCard({
     resume,
@@ -43,17 +33,19 @@ export default function ResumeCard({
     const [renaming, setRenaming] = useState(false);
     const [nameValue, setNameValue] = useState(resume.name);
     const [deleteConfirm, setDeleteConfirm] = useState(false);
+    const [menuStyle, setMenuStyle] = useState({});
     const menuRef = useRef(null);
     const renameRef = useRef(null);
+    const btnRef = useRef(null);
 
-    // Sync name if external rename happens
     useEffect(() => setNameValue(resume.name), [resume.name]);
 
     // Close menu on outside click
     useEffect(() => {
         if (!menuOpen) return;
         const handler = (e) => {
-            if (menuRef.current && !menuRef.current.contains(e.target)) {
+            if (menuRef.current && !menuRef.current.contains(e.target) &&
+                btnRef.current && !btnRef.current.contains(e.target)) {
                 setMenuOpen(false);
                 setDeleteConfirm(false);
             }
@@ -62,7 +54,24 @@ export default function ResumeCard({
         return () => document.removeEventListener("mousedown", handler);
     }, [menuOpen]);
 
-    // Focus rename input when entering rename mode
+    // Position menu using fixed coordinates when it opens
+    useEffect(() => {
+        if (menuOpen && btnRef.current) {
+            const rect = btnRef.current.getBoundingClientRect();
+            const menuHeight = 220; // approximate max height of menu
+            const spaceBelow = window.innerHeight - rect.bottom;
+            const openUpward = spaceBelow < menuHeight;
+
+            setMenuStyle({
+                position: "fixed",
+                right: window.innerWidth - rect.right,
+                ...(openUpward
+                    ? { bottom: window.innerHeight - rect.top + 4 }
+                    : { top: rect.bottom + 4 }),
+            });
+        }
+    }, [menuOpen]);
+
     useEffect(() => {
         if (renaming && renameRef.current) renameRef.current.focus();
     }, [renaming]);
@@ -96,14 +105,12 @@ export default function ResumeCard({
 
     return (
         <div className={`${cardBase} ${cardActive} relative`} onClick={handleCardClick}>
-            {/* Resume icon */}
             {compact ? (
                 <span className="text-base shrink-0">📄</span>
             ) : (
                 <div className="text-3xl mb-1 text-center">📄</div>
             )}
 
-            {/* Name / rename input */}
             <div className="flex-1 min-w-0">
                 {renaming ? (
                     <input
@@ -131,8 +138,9 @@ export default function ResumeCard({
             </div>
 
             {/* 3-dot menu button */}
-            <div className="relative shrink-0" ref={menuRef}>
+            <div className="shrink-0">
                 <button
+                    ref={btnRef}
                     onClick={(e) => {
                         e.stopPropagation();
                         setMenuOpen((v) => !v);
@@ -149,58 +157,60 @@ export default function ResumeCard({
                         <circle cx="10" cy="16" r="1.5" />
                     </svg>
                 </button>
-
-                {/* Dropdown menu */}
-                {menuOpen && (
-                    <div
-                        className="absolute right-0 top-7 z-50 w-44 bg-zinc-800 border border-zinc-700 rounded-lg shadow-2xl py-1"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <MenuItem
-                            icon="✏️"
-                            label="Rename"
-                            onClick={() => { setRenaming(true); setMenuOpen(false); }}
-                        />
-                        <MenuItem
-                            icon="📑"
-                            label="Duplicate"
-                            onClick={() => { onDuplicate(resume.id); setMenuOpen(false); }}
-                        />
-                        <MenuItem
-                            icon="🖨️"
-                            label="Print / Save PDF"
-                            onClick={handlePrint}
-                        />
-                        <div className="border-t border-zinc-700 my-1" />
-                        {deleteConfirm ? (
-                            <div className="px-3 py-2">
-                                <p className="text-xs text-zinc-400 mb-2">Delete permanently?</p>
-                                <div className="flex gap-2">
-                                    <button
-                                        onClick={() => { onDelete(resume.id); setMenuOpen(false); setDeleteConfirm(false); }}
-                                        className="flex-1 text-xs bg-red-600 hover:bg-red-500 text-white rounded px-2 py-1 transition-colors"
-                                    >
-                                        Delete
-                                    </button>
-                                    <button
-                                        onClick={() => setDeleteConfirm(false)}
-                                        className="flex-1 text-xs bg-zinc-700 hover:bg-zinc-600 text-white rounded px-2 py-1 transition-colors"
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
-                            </div>
-                        ) : (
-                            <MenuItem
-                                icon="🗑️"
-                                label="Delete"
-                                danger
-                                onClick={() => setDeleteConfirm(true)}
-                            />
-                        )}
-                    </div>
-                )}
             </div>
+
+            {/* Dropdown menu — fixed position to avoid overflow */}
+            {menuOpen && (
+                <div
+                    ref={menuRef}
+                    className="z-[100] w-44 bg-zinc-800 border border-zinc-700 rounded-lg shadow-2xl py-1"
+                    style={menuStyle}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <MenuItem
+                        icon="✏️"
+                        label="Rename"
+                        onClick={() => { setRenaming(true); setMenuOpen(false); }}
+                    />
+                    <MenuItem
+                        icon="📑"
+                        label="Duplicate"
+                        onClick={() => { onDuplicate(resume.id); setMenuOpen(false); }}
+                    />
+                    <MenuItem
+                        icon="🖨️"
+                        label="Print / Save PDF"
+                        onClick={handlePrint}
+                    />
+                    <div className="border-t border-zinc-700 my-1" />
+                    {deleteConfirm ? (
+                        <div className="px-3 py-2">
+                            <p className="text-xs text-zinc-400 mb-2">Delete permanently?</p>
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => { onDelete(resume.id); setMenuOpen(false); setDeleteConfirm(false); }}
+                                    className="flex-1 text-xs bg-red-600 hover:bg-red-500 text-white rounded px-2 py-1 transition-colors"
+                                >
+                                    Delete
+                                </button>
+                                <button
+                                    onClick={() => setDeleteConfirm(false)}
+                                    className="flex-1 text-xs bg-zinc-700 hover:bg-zinc-600 text-white rounded px-2 py-1 transition-colors"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <MenuItem
+                            icon="🗑️"
+                            label="Delete"
+                            danger
+                            onClick={() => setDeleteConfirm(true)}
+                        />
+                    )}
+                </div>
+            )}
         </div>
     );
 }
