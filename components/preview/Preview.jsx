@@ -200,7 +200,7 @@ const Preview = () => {
       <A4PageWrapper>
         <DragDropContext onDragEnd={currentTemplate === "template1" ? onDragEnd : handleTemplateTwoDragEnd}>
           {currentTemplate === "template1" ? (
-            <div className="w-full h-full bg-white p-4">
+            <div className="w-full h-full bg-white p-4" style={{ fontFamily: resumeData.fontFamily || "Georgia, serif" }}>
               <div className="text-center mb-2">
                 <h1 className="name">{resumeData.name}</h1>
                 <p className="profession">{resumeData.position}</p>

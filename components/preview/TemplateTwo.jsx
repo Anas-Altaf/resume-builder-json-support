@@ -230,7 +230,7 @@ const TemplateTwo = ({
 
 
   return (
-    <div className="w-full h-full bg-white p-4">
+    <div className="w-full h-full bg-white p-4" style={{ fontFamily: resumeData?.fontFamily || "Georgia, serif" }}>
       {/* Header Section */}
       <div className="text-center mb-2">
         <h1 className="name">{namedata}</h1>

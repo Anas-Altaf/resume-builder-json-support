@@ -1,6 +1,7 @@
 const DefaultResumeData = {
   name: "ZAID ADIL",
   position: "Full Stack Developer",
+  fontFamily: "Georgia, serif",
   contactInformation: "+91 123456789",
   email: "hothead01th@gmail.com",
   address: "Kashmir, India",
@@ -47,7 +48,7 @@ const DefaultResumeData = {
     }
   ],
   projects: [
-   
+
     {
       "name": "AI Resume Maker",
       "description": "Developed an intelligent resume builder using Next.js with AI-powered content suggestions, multiple templates, and real-time preview functionality. Integrated with Google's Gemini API for smart content optimization.",
@@ -69,7 +70,7 @@ const DefaultResumeData = {
     {
       title: "Technical Skills",
       skills: [
-        "React", "Next.js", "TypeScript", "Tailwind CSS", "MongoDB", "PostgreSQL", 
+        "React", "Next.js", "TypeScript", "Tailwind CSS", "MongoDB", "PostgreSQL",
         "Express", "Python", "Java", "Docker", "AWS", "Kubernetes", "Jenkins",
         "Firebase", "Redis", "Node.js", "Git", "REST API"
       ]
@@ -84,7 +85,7 @@ const DefaultResumeData = {
       title: "Additional Skills",
       skills: [
         "CI/CD", "Microservices", "System Design", "Cloud Architecture"
-      ] 
+      ]
     }
   ],
   languages: [

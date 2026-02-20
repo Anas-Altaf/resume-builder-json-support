@@ -19,6 +19,7 @@ import { SparklesCore } from "../components/ui/sparkles";
 import AIAnalysis from "../components/ai/AIAnalysis";
 import ResumeSidebar from "../components/resume/ResumeSidebar";
 import useResumes from "../hooks/useResumes";
+import FontPicker from "../components/form/FontPicker";
 
 const ResumeContext = createContext(DefaultResumeData);
 
@@ -140,14 +141,15 @@ export default function Builder() {
                 >
                   <span
                     className={`text-xs px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm ${saveStatus === "saving"
-                        ? "bg-yellow-900/70 text-yellow-300"
-                        : "bg-green-900/70 text-green-300"
+                      ? "bg-yellow-900/70 text-yellow-300"
+                      : "bg-green-900/70 text-green-300"
                       }`}
                   >
                     {saveStatus === "saving" ? "⏳ Saving…" : "✓ Saved"}
                   </span>
                 </div>
                 <LoadUnload />
+                <FontPicker />
                 <PersonalInformation />
                 <SocialMedia />
                 <Summary />
