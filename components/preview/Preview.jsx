@@ -239,8 +239,8 @@ const Preview = () => {
               </div>
               <hr className="border-dashed my-2" />
               {/* two column start */}
-              <div className="grid grid-cols-3 gap-6">
-                <div className="col-span-1 space-y-2">
+              <div className="grid grid-cols-3 gap-4">
+                <div className="col-span-1 space-y-1">
                   {resumeData.summary.length > 0 && (
                     <div className="mb-1">
                       <h2 className="section-title mb-1 border-b-2 border-gray-300">
@@ -249,66 +249,66 @@ const Preview = () => {
                       <p className="content break-words" dangerouslySetInnerHTML={{ __html: parseFormatting(resumeData.summary) }} />
                     </div>
                   )}
-                  <div>
-                    {resumeData.education.length > 0 && (
-                      <div className="mb-1">
-                        <h2 className="section-title mb-1 border-b-2 border-gray-300">
-                          Education
-                        </h2>
-                        {resumeData.education.map((item, index) => (
-                          <div key={index} className="mb-1">
-                            <p className="content i-bold">{item.degree}</p>
-                            <p className="content">{item.school}</p>
-                            <DateRange
-                              startYear={item.startYear}
-                              endYear={item.endYear}
-                              id={`education-start-end-date`}
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  <Droppable droppableId="skills" type="SKILLS">
-                    {(provided) => (
-                      <div {...provided.droppableProps} ref={provided.innerRef}>
-                        {resumeData.skills.map((skill, index) => (
-                          <Draggable
-                            key={`SKILLS-${index}`}
-                            draggableId={`SKILLS-${index}`}
-                            index={index}
-                          >
-                            {(provided, snapshot) => (
-                              <div
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                className={`mb-1 ${snapshot.isDragging &&
-                                  "outline-dashed outline-2 outline-gray-400 bg-white"
-                                  }`}
-                              >
-                                <Skills title={skill.title} skills={skill.skills} />
-                              </div>
-                            )}
-                          </Draggable>
-                        ))}
-                        {provided.placeholder}
-                      </div>
-                    )}
-                  </Droppable>
+                  {resumeData.education.length > 0 && (
+                    <div className="mb-1">
+                      <h2 className="section-title mb-1 border-b-2 border-gray-300">
+                        Education
+                      </h2>
+                      {resumeData.education.map((item, index) => (
+                        <div key={index} className="mb-1">
+                          <p className="content i-bold">{item.degree}</p>
+                          <p className="content">{item.school}</p>
+                          <DateRange
+                            startYear={item.startYear}
+                            endYear={item.endYear}
+                            id={`education-start-end-date`}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {resumeData.skills.length > 0 && (
+                    <Droppable droppableId="skills" type="SKILLS">
+                      {(provided) => (
+                        <div {...provided.droppableProps} ref={provided.innerRef}>
+                          {resumeData.skills.map((skill, index) => (
+                            <Draggable
+                              key={`SKILLS-${index}`}
+                              draggableId={`SKILLS-${index}`}
+                              index={index}
+                            >
+                              {(provided, snapshot) => (
+                                <div
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  className={`mb-1 ${snapshot.isDragging &&
+                                    "outline-dashed outline-2 outline-gray-400 bg-white"
+                                    }`}
+                                >
+                                  <Skills title={skill.title} skills={skill.skills} />
+                                </div>
+                              )}
+                            </Draggable>
+                          ))}
+                          {provided.placeholder}
+                        </div>
+                      )}
+                    </Droppable>
+                  )}
                   <Language title="Languages" languages={resumeData.languages} />
                   <Certification
                     title="Certifications"
                     certifications={resumeData.certifications}
                   />
                 </div>
-                <div className="col-span-2 space-y-2">
+                <div className="col-span-2 space-y-1">
                   <Droppable droppableId="t1-right-sections" type="T1_SECTION">
                     {(sectionProvided) => (
                       <div
                         {...sectionProvided.droppableProps}
                         ref={sectionProvided.innerRef}
-                        className="space-y-2"
+                        className="space-y-1"
                       >
                         {t1RightSectionOrder.map((sectionKey, sectionIdx) => (
                           <Draggable
@@ -426,7 +426,7 @@ const Preview = () => {
                                         </h2>
                                         {resumeData.projects.map((item, index) => (
                                           <Draggable
-                                            key={`${item.title || item.name}-${index}`}
+                                            key={`${item.title}-${index}`}
                                             draggableId={`PROJECTS-${index}`}
                                             index={index}
                                           >
@@ -440,7 +440,7 @@ const Preview = () => {
                                                   }`}
                                               >
                                                 <div className="flex items-center gap-2">
-                                                  <p className="content i-bold">{item.title || item.name}</p>
+                                                  <p className="content i-bold">{item.title}</p>
                                                   {item.link && (
                                                     <Link
                                                       href={item.link}
@@ -474,7 +474,7 @@ const Preview = () => {
                                                           .split("\n")
                                                           .map((achievement, subIndex) => (
                                                             <Draggable
-                                                              key={`${item.title || item.name}-${index}-${subIndex}`}
+                                                              key={`${item.title}-${index}-${subIndex}`}
                                                               draggableId={`PROJECTS_KEY_ACHIEVEMENT-${index}-${subIndex}`}
                                                               index={subIndex}
                                                             >

@@ -48,15 +48,15 @@ const Education = () => {
             onChange={(e) => handleEducation(e, index)} />
           <div className="flex-wrap-gap-2">
             <input
-              type="date"
-              placeholder="Start Year"
+              type="text"
+              placeholder="e.g. Aug 2022"
               name="startYear"
               className="other-input"
               value={education.startYear}
               onChange={(e) => handleEducation(e, index)} />
             <input
-              type="date"
-              placeholder="End Year"
+              type="text"
+              placeholder="e.g. Jun 2026"
               name="endYear"
               className="other-input"
               value={education.endYear}

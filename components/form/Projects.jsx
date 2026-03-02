@@ -88,16 +88,16 @@ const Projects = () => {
           />
           <div className="flex-wrap-gap-2">
             <input
-              type="date"
-              placeholder="Start Year"
+              type="text"
+              placeholder="e.g. Feb 2024"
               name="startYear"
               className="other-input"
               value={project.startYear}
               onChange={(e) => handleProjects(e, index)}
             />
             <input
-              type="date"
-              placeholder="End Year"
+              type="text"
+              placeholder="e.g. Mar 2024"
               name="endYear"
               className="other-input"
               value={project.endYear}

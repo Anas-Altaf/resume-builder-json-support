@@ -91,16 +91,16 @@ const WorkExperience = () => {
           />
           <div className="flex-wrap-gap-2">
             <input
-              type="date"
-              placeholder="Start Year"
+              type="text"
+              placeholder="e.g. Oct 2023"
               name="startYear"
               className="other-input"
               value={workExperience.startYear}
               onChange={(e) => handleWorkExperience(e, index)}
             />
             <input
-              type="date"
-              placeholder="End Year"
+              type="text"
+              placeholder="e.g. Mar 2024 or Present"
               name="endYear"
               className="other-input"
               value={workExperience.endYear}

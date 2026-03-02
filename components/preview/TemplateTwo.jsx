@@ -6,6 +6,7 @@ import { CgWebsite } from "react-icons/cg";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Certification from "./Certification";
 import { parseFormatting } from "../../utils/parseFormatting";
+import DateRange from "../utility/DateRange";
 
 const TemplateTwo = ({
   namedata,
@@ -29,6 +30,34 @@ const TemplateTwo = ({
   setResumeData
 }) => {
 
+  // Helper: check if a section has content worth rendering
+  const isSectionEmpty = (id) => {
+    switch (id) {
+      case "summary":
+        return !summarydata || summarydata.trim().length === 0;
+      case "education":
+        return !educationdata || educationdata.length === 0;
+      case "projects":
+        return !projectsdata || projectsdata.length === 0;
+      case "experience":
+        return !workExperiencedata || workExperiencedata.length === 0;
+      case "skills": {
+        const tech = skillsdata.find(skill => skill.title === "Technical Skills");
+        return !tech || !tech.skills || tech.skills.length === 0;
+      }
+      case "softskills": {
+        const soft = skillsdata.find(skill => skill.title === "Soft Skills");
+        return !soft || !soft.skills || soft.skills.length === 0;
+      }
+      case "languages":
+        return !languagesdata || languagesdata.length === 0;
+      case "certifications":
+        return !certificationsdata || certificationsdata.length === 0;
+      default:
+        return true;
+    }
+  };
+
   const sections = [
     { id: "summary", title: "Summary", content: summarydata },
     { id: "education", title: "Education", content: educationdata },
@@ -42,7 +71,7 @@ const TemplateTwo = ({
 
   const orderedSections = sectionOrder
     .map(id => sections.find(section => section.id === id))
-    .filter(section => section !== undefined);
+    .filter(section => section !== undefined && !isSectionEmpty(section.id));
 
   const renderSection = (section) => {
     switch (section.id) {
@@ -51,7 +80,7 @@ const TemplateTwo = ({
           <div>
             <h2 className="section-title border-b-2 border-gray-300 mb-1">Certifications</h2>
             <ul className="list-disc pl-4 content">
-              {certificationsdata && certificationsdata.map((cert, i) => (
+              {certificationsdata.map((cert, i) => (
                 <li key={i} className="content">
                   {cert.name}
                   {cert.issuer && (
@@ -77,9 +106,11 @@ const TemplateTwo = ({
               <div key={idx} className="mb-1">
                 <p className="content font-semibold">{edu.school}</p>
                 <p className="content">{edu.degree}</p>
-                <p className="sub-content font-medium text-gray-600">
-                  {new Date(edu.startYear).getFullYear()} - {new Date(edu.endYear).getFullYear()}
-                </p>
+                <DateRange
+                  startYear={edu.startYear}
+                  endYear={edu.endYear}
+                  id={`t2-education-date-${idx}`}
+                />
               </div>
             ))}
           </div>
@@ -92,17 +123,17 @@ const TemplateTwo = ({
               {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
                   {projectsdata.map((project, idx) => (
-                    <Draggable key={project.name + idx} draggableId={`project-${idx}`} index={idx}>
+                    <Draggable key={(project.title || "") + idx} draggableId={`project-${idx}`} index={idx}>
                       {(provided, snapshot) => (
                         <div
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className={`mb-2 ${snapshot.isDragging ? "bg-gray-50" : ""}`}
+                          className={`mb-1 ${snapshot.isDragging ? "bg-gray-50" : ""}`}
                         >
                           <div className="flex justify-between items-center">
                             <div className="flex items-center gap-2">
-                              <p className="content i-bold">{project.name}</p>
+                              <p className="content i-bold">{project.title}</p>
                               {project.link && (
                                 <Link
                                   href={project.link}
@@ -115,14 +146,18 @@ const TemplateTwo = ({
                                 </Link>
                               )}
                             </div>
-                            <p className="sub-content font-medium text-gray-600">
-                              {new Date(project.startYear).getFullYear()} - {new Date(project.endYear).getFullYear()}
-                            </p>
+                            <DateRange
+                              startYear={project.startYear}
+                              endYear={project.endYear}
+                              id={`t2-project-date-${idx}`}
+                            />
                           </div>
-                          <p className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(project.description) }} />
+                          {project.description && (
+                            <p className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(project.description) }} />
+                          )}
                           {project.keyAchievements && (
                             <ul className="list-disc pl-4 content">
-                              {project.keyAchievements.split('\n').map((achievement, i) => (
+                              {project.keyAchievements.split('\n').filter(a => a.trim()).map((achievement, i) => (
                                 <li key={i} className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(achievement) }} />
                               ))}
                             </ul>
@@ -151,22 +186,30 @@ const TemplateTwo = ({
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className={`mb-2 ${snapshot.isDragging ? "bg-gray-50" : ""}`}
+                          className={`mb-1 ${snapshot.isDragging ? "bg-gray-50" : ""}`}
                         >
                           <div className="flex justify-between items-center">
                             <p className="content">
                               <span className="font-bold">{work.company}</span>
-                              <span className="mx-1">-</span>
-                              <span>{work.position}</span>
+                              {work.position && (
+                                <>
+                                  <span className="mx-1">-</span>
+                                  <span>{work.position}</span>
+                                </>
+                              )}
                             </p>
-                            <p className="sub-content font-medium text-gray-600">
-                              {new Date(work.startYear).getFullYear()} - {new Date(work.endYear).getFullYear()}
-                            </p>
+                            <DateRange
+                              startYear={work.startYear}
+                              endYear={work.endYear}
+                              id={`t2-work-date-${idx}`}
+                            />
                           </div>
-                          <p className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(work.description) }} />
+                          {work.description && (
+                            <p className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(work.description) }} />
+                          )}
                           {work.keyAchievements && (
                             <ul className="list-disc pl-4 content">
-                              {work.keyAchievements.split('\n').map((ach, i) => (
+                              {work.keyAchievements.split('\n').filter(a => a.trim()).map((ach, i) => (
                                 <li key={i} className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(ach) }} />
                               ))}
                             </ul>
@@ -280,7 +323,7 @@ const TemplateTwo = ({
                     <div
                       ref={provided.innerRef}
                       {...provided.draggableProps}
-                      className={`mb-2 ${snapshot.isDragging ? "outline-dashed outline-2 outline-blue-300 bg-gray-50" : ""}`}
+                      className={`mb-1 ${snapshot.isDragging ? "outline-dashed outline-2 outline-blue-300 bg-gray-50" : ""}`}
                     >
                       <div {...provided.dragHandleProps} className="cursor-grab exclude-print select-none text-gray-300 hover:text-gray-500 float-right text-lg leading-none" title="Drag to reorder section">
                         &#8801;

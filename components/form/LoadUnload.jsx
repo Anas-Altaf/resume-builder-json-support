@@ -23,6 +23,15 @@ const LoadUnload = () => {
           setError(`Invalid resume file. Missing fields: ${missingKeys.join(", ")}`);
           return;
         }
+        // Backward compat: map project.name → project.title
+        if (parsed.projects) {
+          parsed.projects = parsed.projects.map((p) => {
+            if (p.name && !p.title) {
+              return { ...p, title: p.name };
+            }
+            return p;
+          });
+        }
         setResumeData(parsed);
         setError("");
       } catch {

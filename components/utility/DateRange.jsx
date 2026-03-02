@@ -1,11 +1,20 @@
 
 
 const DateRange = ({ startYear, endYear, id }) => {
-    const start = new Date(startYear);
-    const end = new Date(endYear);
+    if (!startYear && !endYear) return null;
+
+    let display = "";
+    if (startYear && endYear) {
+        display = `${startYear} - ${endYear}`;
+    } else if (startYear) {
+        display = startYear;
+    } else {
+        display = endYear;
+    }
+
     return (
         <p id={id} className="sub-content">
-            {start.toLocaleString('default', { month: 'short' })}, {start.getFullYear()} - {end != "Invalid Date" ? end.toLocaleString('default', { month: 'short' }) + ', ' + end.getFullYear() : 'Present'}
+            {display}
         </p>
     );
 };
