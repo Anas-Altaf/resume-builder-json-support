@@ -200,7 +200,7 @@ const Preview = () => {
       <A4PageWrapper>
         <DragDropContext onDragEnd={currentTemplate === "template1" ? onDragEnd : handleTemplateTwoDragEnd}>
           {currentTemplate === "template1" ? (
-            <div className="w-full h-full bg-white p-4" style={{ fontFamily: resumeData.fontFamily || "Georgia, serif" }}>
+            <div className="w-full h-full bg-white p-4" style={{ fontFamily: resumeData.fontFamily || "Georgia, serif", lineHeight: resumeData.spacing?.lineHeight || 1.3 }}>
               <div className="text-center mb-2">
                 <h1 className="name">{resumeData.name}</h1>
                 <p className="profession">{resumeData.position}</p>
@@ -239,8 +239,8 @@ const Preview = () => {
               </div>
               <hr className="border-dashed my-2" />
               {/* two column start */}
-              <div className="grid grid-cols-3 gap-4">
-                <div className="col-span-1 space-y-1">
+              <div className="grid grid-cols-3" style={{ gap: `${resumeData.spacing?.columnGap ?? 16}px` }}>
+                <div className="col-span-1" style={{ display: 'flex', flexDirection: 'column', gap: `${resumeData.spacing?.sectionGap ?? 4}px` }}>
                   {resumeData.summary.length > 0 && (
                     <div className="mb-1">
                       <h2 className="section-title mb-1 border-b-2 border-gray-300">
@@ -255,7 +255,7 @@ const Preview = () => {
                         Education
                       </h2>
                       {resumeData.education.map((item, index) => (
-                        <div key={index} className="mb-1">
+                        <div key={index} style={{ marginBottom: `${resumeData.spacing?.entryGap ?? 2}px` }}>
                           <p className="content i-bold">{item.degree}</p>
                           <p className="content">{item.school}</p>
                           <DateRange
@@ -302,13 +302,13 @@ const Preview = () => {
                     certifications={resumeData.certifications}
                   />
                 </div>
-                <div className="col-span-2 space-y-1">
+                <div className="col-span-2" style={{ display: 'flex', flexDirection: 'column', gap: `${resumeData.spacing?.sectionGap ?? 4}px` }}>
                   <Droppable droppableId="t1-right-sections" type="T1_SECTION">
                     {(sectionProvided) => (
                       <div
                         {...sectionProvided.droppableProps}
                         ref={sectionProvided.innerRef}
-                        className="space-y-1"
+                        style={{ display: 'flex', flexDirection: 'column', gap: `${resumeData.spacing?.sectionGap ?? 4}px` }}
                       >
                         {t1RightSectionOrder.map((sectionKey, sectionIdx) => (
                           <Draggable

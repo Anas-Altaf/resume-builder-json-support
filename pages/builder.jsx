@@ -20,6 +20,7 @@ import AIAnalysis from "../components/ai/AIAnalysis";
 import ResumeSidebar from "../components/resume/ResumeSidebar";
 import useResumes from "../hooks/useResumes";
 import FontPicker from "../components/form/FontPicker";
+import SpacingControls from "../components/form/SpacingControls";
 
 const ResumeContext = createContext(DefaultResumeData);
 
@@ -150,6 +151,7 @@ export default function Builder() {
                 </div>
                 <LoadUnload />
                 <FontPicker />
+                <SpacingControls />
                 <PersonalInformation />
                 <SocialMedia />
                 <Summary />

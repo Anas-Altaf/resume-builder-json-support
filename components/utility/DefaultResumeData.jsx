@@ -2,6 +2,12 @@ const DefaultResumeData = {
   name: "Anas Altaf",
   position: "DevOps Engineer | AWS",
   fontFamily: "Georgia, serif",
+  spacing: {
+    sectionGap: 4,     // px between major sections
+    entryGap: 2,       // px between entries within a section
+    lineHeight: 1.3,   // unitless line-height for body text
+    columnGap: 16,     // px between columns (Template 1)
+  },
   contactInformation: "+92-310-4889407",
   email: "me@anasaltaf.dev",
   address: "Faisalabad, Pakistan",
