@@ -138,6 +138,7 @@ const LoadUnload = () => {
       <div className="flex flex-col gap-2 mb-2 items-center">
         <div className="flex flex-wrap gap-4 justify-center">
           <button
+            type="button"
             onClick={openLoad}
             className="inline-flex items-center gap-2 px-4 py-2 text-white bg-zinc-800 rounded hover:bg-zinc-700 transition-colors"
           >
@@ -145,6 +146,7 @@ const LoadUnload = () => {
             <span className="text-[0.95rem]">Load Data</span>
           </button>
           <button
+            type="button"
             onClick={openSave}
             className="inline-flex items-center gap-2 px-4 py-2 text-white bg-zinc-800 rounded hover:bg-zinc-700 transition-colors"
           >
@@ -159,12 +161,14 @@ const LoadUnload = () => {
         <Modal title="Load Resume Data" onClose={() => setLoadOpen(false)}>
           <div className="flex gap-2 mb-3">
             <button
+              type="button"
               onClick={pasteFromClipboard}
               className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 text-sm text-white bg-zinc-700 rounded hover:bg-zinc-600 transition-colors"
             >
               <FaClipboard /> Paste from Clipboard
             </button>
             <button
+              type="button"
               onClick={() => fileInputRef.current?.click()}
               className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 text-sm text-white bg-zinc-700 rounded hover:bg-zinc-600 transition-colors"
             >
@@ -191,6 +195,7 @@ const LoadUnload = () => {
           {loadSuccess && <p className="text-green-400 text-sm mt-2">{loadSuccess}</p>}
 
           <button
+            type="button"
             onClick={() => applyLoadText(loadText)}
             disabled={!loadText.trim()}
             className="mt-3 w-full py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
@@ -205,12 +210,14 @@ const LoadUnload = () => {
         <Modal title="Save Resume Data" onClose={() => setSaveOpen(false)}>
           <div className="flex gap-2 mb-3">
             <button
+              type="button"
               onClick={copyToClipboard}
               className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 text-sm text-white bg-zinc-700 rounded hover:bg-zinc-600 transition-colors"
             >
               <FaCopy /> Copy to Clipboard
             </button>
             <button
+              type="button"
               onClick={downloadFile}
               className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 text-sm text-white bg-zinc-700 rounded hover:bg-zinc-600 transition-colors"
             >
