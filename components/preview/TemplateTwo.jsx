@@ -100,9 +100,9 @@ const TemplateTwo = ({
             <ul className="list-disc pl-4 content">
               {certificationsdata.map((cert, i) => (
                 <li key={i} className="content">
-                  {cert.name}
+                  <span dangerouslySetInnerHTML={{ __html: parseFormatting(cert.name) }} />
                   {cert.issuer && (
-                    <span className="text-gray-600"> - {cert.issuer}</span>
+                    <span className="text-gray-600"> - <span dangerouslySetInnerHTML={{ __html: parseFormatting(cert.issuer) }} /></span>
                   )}
                 </li>
               ))}
@@ -122,8 +122,8 @@ const TemplateTwo = ({
             <h2 className="section-title border-b-2 border-gray-300 mb-1">Education</h2>
             {educationdata.map((edu, idx) => (
               <div key={idx} className="mb-1">
-                <p className="content font-semibold">{edu.school}</p>
-                <p className="content">{edu.degree}</p>
+                <p className="content font-semibold" dangerouslySetInnerHTML={{ __html: parseFormatting(edu.school) }} />
+                <p className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(edu.degree) }} />
                 <DateRange
                   startYear={edu.startYear}
                   endYear={edu.endYear}
@@ -152,7 +152,7 @@ const TemplateTwo = ({
                         >
                           <div className="flex justify-between items-center">
                             <div className="flex items-center gap-2">
-                              <p className="content i-bold">{project.title}</p>
+                              <p className="content i-bold" dangerouslySetInnerHTML={{ __html: parseFormatting(project.title) }} />
                               {project.link && (
                                 <Link
                                   href={project.link}
@@ -210,11 +210,11 @@ const TemplateTwo = ({
                         >
                           <div className="flex justify-between items-center">
                             <p className="content">
-                              <span className="font-bold">{work.company}</span>
+                              <span className="font-bold" dangerouslySetInnerHTML={{ __html: parseFormatting(work.company) }} />
                               {work.position && (
                                 <>
                                   <span className="mx-1">-</span>
-                                  <span>{work.position}</span>
+                                  <span dangerouslySetInnerHTML={{ __html: parseFormatting(work.position) }} />
                                 </>
                               )}
                             </p>
@@ -312,8 +312,8 @@ const TemplateTwo = ({
     <div className="w-full h-full bg-white p-4" style={{ fontFamily: resumeData?.fontFamily || "Georgia, serif", lineHeight: resumeData?.spacing?.lineHeight || 1.3 }}>
       {/* Header Section */}
       <div className="text-center mb-2">
-        <h1 className="name">{namedata}</h1>
-        <p className="profession">{positiondata}</p>
+        <h1 className="name" dangerouslySetInnerHTML={{ __html: parseFormatting(namedata) }} />
+        <p className="profession" dangerouslySetInnerHTML={{ __html: parseFormatting(positiondata) }} />
         <ContactInfo
           mainclass="flex flex-row gap-1 contact justify-center"
           linkclass="inline-flex items-center gap-1"

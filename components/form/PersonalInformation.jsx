@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { ResumeContext } from "../../pages/builder";
-const PersonalInformation = ({}) => {
+import RichInput from "./RichInput";
+const PersonalInformation = ({ }) => {
   const { resumeData, setResumeData, handleProfilePicture, handleChange } =
     useContext(ResumeContext);
 
@@ -8,16 +9,14 @@ const PersonalInformation = ({}) => {
     <div className="flex-col-gap-2">
       <h2 className="input-title">Personal Information</h2>
       <div className="grid-4">
-        <input
-          type="text"
+        <RichInput
           placeholder="Full Name"
           name="name"
           className="pi"
           value={resumeData.name}
           onChange={handleChange}
         />
-        <input
-          type="text"
+        <RichInput
           placeholder="Job Title"
           name="position"
           className="pi"

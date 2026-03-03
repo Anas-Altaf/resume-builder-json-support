@@ -1,6 +1,7 @@
 import FormButton from "./FormButton";
 import React, { useContext } from "react";
 import { ResumeContext } from "../../pages/builder";
+import RichInput from "./RichInput";
 
 const Education = () => {
   const { resumeData, setResumeData } = useContext(ResumeContext);
@@ -32,15 +33,13 @@ const Education = () => {
       <h2 className="input-title">Education</h2>
       {resumeData.education.map((education, index) => (
         <div key={index} className="f-col">
-          <input
-            type="text"
+          <RichInput
             placeholder="School"
             name="school"
             className="w-full other-input"
             value={education.school}
             onChange={(e) => handleEducation(e, index)} />
-          <input
-            type="text"
+          <RichInput
             placeholder="Degree"
             name="degree"
             className="w-full other-input"

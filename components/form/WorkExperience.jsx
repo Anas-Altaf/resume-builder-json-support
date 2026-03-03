@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { ResumeContext } from "../../pages/builder";
 import AISuggestionButton from '../ai/AISuggestionButton';
 import RichTextArea from './RichTextArea';
+import RichInput from "./RichInput";
 
 const WorkExperience = () => {
   const {
@@ -44,16 +45,14 @@ const WorkExperience = () => {
       <h2 className="input-title">Work Experience</h2>
       {resumeData.workExperience.map((workExperience, index) => (
         <div key={index} className="f-col">
-          <input
-            type="text"
+          <RichInput
             placeholder="Company"
             name="company"
             className="w-full other-input"
             value={workExperience.company}
             onChange={(e) => handleWorkExperience(e, index)}
           />
-          <input
-            type="text"
+          <RichInput
             placeholder="Job Title"
             name="position"
             className="w-full other-input"

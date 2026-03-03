@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { ResumeContext } from "../../pages/builder";
 import FormButton from "./FormButton";
+import RichInput from "./RichInput";
 
 const Certification = () => {
   const { resumeData, setResumeData } = useContext(ResumeContext);
@@ -37,16 +38,14 @@ const Certification = () => {
       <h2 className="input-title">{title}</h2>
       {resumeData[skillType].map((certification, index) => (
         <div key={index} className="f-col">
-          <input
-            type="text"
+          <RichInput
             placeholder="Certification Name"
             name="name"
             className="w-full other-input"
             value={certification.name}
             onChange={(e) => handleCertification(e, index)}
           />
-          <input
-            type="text"
+          <RichInput
             placeholder="Issuer"
             name="issuer"
             className="w-full other-input"
@@ -55,10 +54,10 @@ const Certification = () => {
           />
         </div>
       ))}
-      <FormButton 
-        size={resumeData[skillType].length} 
-        add={addCertification} 
-        remove={removeCertification} 
+      <FormButton
+        size={resumeData[skillType].length}
+        add={addCertification}
+        remove={removeCertification}
       />
     </div>
   );

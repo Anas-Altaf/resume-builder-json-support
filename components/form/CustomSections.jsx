@@ -1,6 +1,8 @@
 import FormButton from "./FormButton";
 import React, { useContext } from "react";
 import { ResumeContext } from "../../pages/builder";
+import RichInput from "./RichInput";
+import RichTextArea from "./RichTextArea";
 
 const CustomSections = () => {
     const { resumeData, setResumeData } = useContext(ResumeContext);
@@ -39,16 +41,17 @@ const CustomSections = () => {
             <h2 className="input-title">Custom Sections</h2>
             {customSections.map((section, index) => (
                 <div key={index} className="f-col">
-                    <input
-                        type="text"
+                    <RichInput
                         placeholder="Section Title (e.g. Awards, Publications)"
                         className="w-full other-input"
+                        name="title"
                         value={section.title}
                         onChange={(e) => handleSectionTitle(e, index)}
                     />
-                    <textarea
+                    <RichTextArea
                         placeholder="Items (one per line)"
                         className="w-full other-input h-28"
+                        name="items"
                         value={(section.items || []).join("\n")}
                         onChange={(e) => handleSectionItems(e, index)}
                     />

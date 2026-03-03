@@ -208,8 +208,8 @@ const Preview = () => {
           {currentTemplate === "template1" ? (
             <div className="w-full h-full bg-white p-4" style={{ fontFamily: resumeData.fontFamily || "Georgia, serif", lineHeight: resumeData.spacing?.lineHeight || 1.3 }}>
               <div className="text-center mb-2">
-                <h1 className="name">{resumeData.name}</h1>
-                <p className="profession">{resumeData.position}</p>
+                <h1 className="name" dangerouslySetInnerHTML={{ __html: parseFormatting(resumeData.name) }} />
+                <p className="profession" dangerouslySetInnerHTML={{ __html: parseFormatting(resumeData.position) }} />
                 <ContactInfo
                   mainclass="flex flex-row gap-1 contact justify-center"
                   linkclass="inline-flex items-center gap-1"
@@ -262,8 +262,8 @@ const Preview = () => {
                       </h2>
                       {resumeData.education.map((item, index) => (
                         <div key={index} style={{ marginBottom: `${resumeData.spacing?.entryGap ?? 2}px` }}>
-                          <p className="content i-bold">{item.degree}</p>
-                          <p className="content">{item.school}</p>
+                          <p className="content i-bold" dangerouslySetInnerHTML={{ __html: parseFormatting(item.degree) }} />
+                          <p className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(item.school) }} />
                           <DateRange
                             startYear={item.startYear}
                             endYear={item.endYear}
@@ -373,8 +373,8 @@ const Preview = () => {
                                                   "outline-dashed outline-2 outline-gray-400 bg-white"
                                                   }`}
                                               >
-                                                <p className="content i-bold">{item.company}</p>
-                                                <p className="content">{item.position}</p>
+                                                <p className="content i-bold" dangerouslySetInnerHTML={{ __html: parseFormatting(item.company) }} />
+                                                <p className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(item.position) }} />
                                                 <DateRange
                                                   startYear={item.startYear}
                                                   endYear={item.endYear}
@@ -460,7 +460,7 @@ const Preview = () => {
                                                   }`}
                                               >
                                                 <div className="flex items-center gap-2">
-                                                  <p className="content i-bold">{item.title}</p>
+                                                  <p className="content i-bold" dangerouslySetInnerHTML={{ __html: parseFormatting(item.title) }} />
                                                   {item.link && (
                                                     <Link
                                                       href={item.link}

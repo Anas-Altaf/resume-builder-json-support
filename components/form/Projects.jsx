@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { ResumeContext } from "../../pages/builder";
 import AISuggestionButton from '../ai/AISuggestionButton';
 import RichTextArea from './RichTextArea';
+import RichInput from "./RichInput";
 
 const Projects = () => {
   const { resumeData, setResumeData } = useContext(ResumeContext);
@@ -41,8 +42,7 @@ const Projects = () => {
       <h2 className="input-title">Projects</h2>
       {resumeData.projects.map((project, index) => (
         <div key={index} className="f-col">
-          <input
-            type="text"
+          <RichInput
             placeholder="Project Name"
             name="title"
             className="w-full other-input"
