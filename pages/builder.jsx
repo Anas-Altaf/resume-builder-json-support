@@ -15,6 +15,7 @@ import Projects from "../components/form/Projects";
 import Education from "../components/form/Education";
 import dynamic from "next/dynamic";
 import Certification from "../components/form/certification";
+import CustomSections from "../components/form/CustomSections";
 import { SparklesCore } from "../components/ui/sparkles";
 import AIAnalysis from "../components/ai/AIAnalysis";
 import ResumeSidebar from "../components/resume/ResumeSidebar";
@@ -163,6 +164,7 @@ export default function Builder() {
                 ))}
                 <Language />
                 <Certification />
+                <CustomSections />
               </form>
             </div>
           )}

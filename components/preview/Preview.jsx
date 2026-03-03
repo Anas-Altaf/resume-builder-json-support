@@ -173,20 +173,26 @@ const Preview = () => {
     }
   };
 
+  // Sync sectionOrder: ensure all custom section IDs are included
   useEffect(() => {
     const savedOrder = localStorage.getItem('sectionOrder');
+    let order;
     if (savedOrder) {
-      // Ensure certifications is included in the saved order
-      const parsedOrder = JSON.parse(savedOrder);
-      if (!parsedOrder.includes("certifications")) {
-        parsedOrder.push("certifications");
+      order = JSON.parse(savedOrder);
+      if (!order.includes("certifications")) {
+        order.push("certifications");
       }
-      setSectionOrder(parsedOrder);
     } else {
-      // If no saved order, use default sections
-      localStorage.setItem('sectionOrder', JSON.stringify(defaultSections));
+      order = [...defaultSections];
     }
-  }, []);
+    // Append any custom section IDs not yet in order
+    const customIds = (resumeData.customSections || []).map(s => s.id).filter(Boolean);
+    customIds.forEach(id => {
+      if (!order.includes(id)) order.push(id);
+    });
+    setSectionOrder(order);
+    localStorage.setItem('sectionOrder', JSON.stringify(order));
+  }, [resumeData.customSections]);
 
   return (
     <div className="md:max-w-[60%] sticky top-0 preview rm-padding-print p-6 md:overflow-y-scroll md:h-screen">
@@ -301,6 +307,20 @@ const Preview = () => {
                     title="Certifications"
                     certifications={resumeData.certifications}
                   />
+                  {(resumeData.customSections || []).map((section, idx) => (
+                    section.title && section.items && section.items.filter(i => i.trim()).length > 0 && (
+                      <div key={`custom-${idx}`} className="mb-1">
+                        <h2 className="section-title mb-1 border-b-2 border-gray-300">
+                          {section.title}
+                        </h2>
+                        <ul className="list-disc ul-padding content">
+                          {section.items.filter(i => i.trim()).map((item, i) => (
+                            <li key={i}><span dangerouslySetInnerHTML={{ __html: parseFormatting(item) }} /></li>
+                          ))}
+                        </ul>
+                      </div>
+                    )
+                  ))}
                 </div>
                 <div className="col-span-2" style={{ display: 'flex', flexDirection: 'column', gap: `${resumeData.spacing?.sectionGap ?? 4}px` }}>
                   <Droppable droppableId="t1-right-sections" type="T1_SECTION">
@@ -534,7 +554,6 @@ const Preview = () => {
               languagesdata={resumeData.languages}
               certificationsdata={resumeData.certifications}
               sectionOrder={sectionOrder}
-              onDragEnd={handleTemplateTwoDragEnd}
               resumeData={resumeData}
               setResumeData={setResumeData}
             />

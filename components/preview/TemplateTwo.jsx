@@ -3,10 +3,19 @@ import ContactInfo from "./ContactInfo";
 import Link from "next/link";
 import { FaExternalLinkAlt, FaGithub, FaLinkedin, FaTwitter, FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { CgWebsite } from "react-icons/cg";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import dynamic from "next/dynamic";
 import Certification from "./Certification";
 import { parseFormatting } from "../../utils/parseFormatting";
 import DateRange from "../utility/DateRange";
+
+const Droppable = dynamic(
+  () => import("react-beautiful-dnd").then((mod) => mod.Droppable),
+  { ssr: false }
+);
+const Draggable = dynamic(
+  () => import("react-beautiful-dnd").then((mod) => mod.Draggable),
+  { ssr: false }
+);
 
 const TemplateTwo = ({
   namedata,
@@ -25,7 +34,6 @@ const TemplateTwo = ({
   languagesdata,
   certificationsdata,
   sectionOrder,
-  onDragEnd,
   resumeData,
   setResumeData
 }) => {
@@ -53,8 +61,12 @@ const TemplateTwo = ({
         return !languagesdata || languagesdata.length === 0;
       case "certifications":
         return !certificationsdata || certificationsdata.length === 0;
-      default:
+      default: {
+        // Check custom sections
+        const custom = (resumeData.customSections || []).find(s => s.id === id);
+        if (custom) return !custom.items || custom.items.filter(i => i.trim()).length === 0;
         return true;
+      }
     }
   };
 
@@ -66,7 +78,13 @@ const TemplateTwo = ({
     { id: "skills", title: "Technical Skills", content: skillsdata },
     { id: "softskills", title: "Soft Skills", content: skillsdata.find(skill => skill.title === "Soft Skills")?.skills || [] },
     { id: "languages", title: "Languages", content: languagesdata },
-    { id: "certifications", title: "Certifications", content: certificationsdata }
+    { id: "certifications", title: "Certifications", content: certificationsdata },
+    // Include custom sections
+    ...(resumeData.customSections || []).filter(s => s.title && s.items).map(s => ({
+      id: s.id,
+      title: s.title,
+      content: s.items,
+    })),
   ];
 
   const orderedSections = sectionOrder
@@ -254,6 +272,22 @@ const TemplateTwo = ({
           </div>
         );
       default:
+        // Render custom sections
+        if (section.content && Array.isArray(section.content)) {
+          const items = section.content.filter(i => i.trim());
+          if (items.length > 0) {
+            return (
+              <div>
+                <h2 className="section-title border-b-2 border-gray-300 mb-1">{section.title}</h2>
+                <ul className="list-disc pl-4 content">
+                  {items.map((item, i) => (
+                    <li key={i} className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(item) }} />
+                  ))}
+                </ul>
+              </div>
+            );
+          }
+        }
         return null;
     }
   };
@@ -315,32 +349,30 @@ const TemplateTwo = ({
       </div>
 
       {/* Draggable Sections */}
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="sections" type="SECTION">
-          {(provided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef} style={{ display: 'flex', flexDirection: 'column', gap: `${resumeData?.spacing?.sectionGap ?? 4}px` }}>
-              {orderedSections.map((section, index) => (
-                <Draggable key={section.id} draggableId={section.id} index={index}>
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      className={`${snapshot.isDragging ? "outline-dashed outline-2 outline-blue-300 bg-gray-50" : ""}`}
-                      style={{ marginBottom: `${resumeData?.spacing?.sectionGap ?? 4}px` }}
-                    >
-                      <div {...provided.dragHandleProps} className="cursor-grab exclude-print select-none text-gray-300 hover:text-gray-500 float-right text-lg leading-none" title="Drag to reorder section">
-                        &#8801;
-                      </div>
-                      {renderSection(section)}
+      <Droppable droppableId="sections" type="SECTION">
+        {(provided) => (
+          <div {...provided.droppableProps} ref={provided.innerRef} style={{ display: 'flex', flexDirection: 'column', gap: `${resumeData?.spacing?.sectionGap ?? 4}px` }}>
+            {orderedSections.map((section, index) => (
+              <Draggable key={section.id} draggableId={section.id} index={index}>
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    className={`${snapshot.isDragging ? "outline-dashed outline-2 outline-blue-300 bg-gray-50" : ""}`}
+                    style={{ marginBottom: `${resumeData?.spacing?.sectionGap ?? 4}px` }}
+                  >
+                    <div {...provided.dragHandleProps} className="cursor-grab exclude-print select-none text-gray-300 hover:text-gray-500 float-right text-lg leading-none" title="Drag to reorder section">
+                      &#8801;
                     </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+                    {renderSection(section)}
+                  </div>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </div>
   );
 };

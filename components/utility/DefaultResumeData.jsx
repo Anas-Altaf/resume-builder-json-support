@@ -68,7 +68,7 @@ const DefaultResumeData = {
       keyAchievements: "Configured Auto Scaling and Load Balancing for high availability\nImplemented Terraform scripts for complete infrastructure provisioning\nIntegrated CloudWatch monitoring with custom alerts",
       startYear: "Feb 2024",
       endYear: "Mar 2024",
-      link: "https://github.com/HOTHEAD01TH/aws-scalable-infra",
+      link: "https://github.com/Anas-Altaf/aws-scalable-infra",
     },
     {
       title: "Kubernetes CI/CD Pipeline",
@@ -76,7 +76,7 @@ const DefaultResumeData = {
       keyAchievements: "Implemented blue-green deployment strategy on Kubernetes\nSecured container images using best practices and vulnerability scanning\nReduced deployment failures by 40% through automated testing stages",
       startYear: "Mar 2024",
       endYear: "Apr 2024",
-      link: "https://github.com/HOTHEAD01TH/k8s-cicd-pipeline",
+      link: "https://github.com/Anas-Altaf/k8s-cicd-pipeline",
     },
   ],
   skills: [
@@ -142,6 +142,7 @@ const DefaultResumeData = {
       issuer: "HashiCorp",
     },
   ],
+  customSections: [],
 };
 
 export default DefaultResumeData;
