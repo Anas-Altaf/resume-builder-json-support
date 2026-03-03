@@ -148,7 +148,7 @@ const TemplateTwo = ({
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                           className={`${snapshot.isDragging ? "bg-gray-50" : ""}`}
-                          style={{ marginBottom: `${resumeData?.spacing?.entryGap ?? 2}px` }}
+                          style={{ ...provided.draggableProps.style, marginBottom: `${resumeData?.spacing?.entryGap ?? 2}px` }}
                         >
                           <div className="flex justify-between items-center">
                             <div className="flex items-center gap-2">
@@ -206,7 +206,7 @@ const TemplateTwo = ({
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                           className={`${snapshot.isDragging ? "bg-gray-50" : ""}`}
-                          style={{ marginBottom: `${resumeData?.spacing?.entryGap ?? 2}px` }}
+                          style={{ ...provided.draggableProps.style, marginBottom: `${resumeData?.spacing?.entryGap ?? 2}px` }}
                         >
                           <div className="flex justify-between items-center">
                             <p className="content">
@@ -359,7 +359,7 @@ const TemplateTwo = ({
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     className={`${snapshot.isDragging ? "outline-dashed outline-2 outline-blue-300 bg-gray-50" : ""}`}
-                    style={{ marginBottom: `${resumeData?.spacing?.sectionGap ?? 4}px` }}
+                    style={{ ...provided.draggableProps.style, marginBottom: `${resumeData?.spacing?.sectionGap ?? 4}px` }}
                   >
                     <div {...provided.dragHandleProps} className="cursor-grab exclude-print select-none text-gray-300 hover:text-gray-500 float-right text-lg leading-none" title="Drag to reorder section">
                       &#8801;

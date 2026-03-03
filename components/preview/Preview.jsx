@@ -262,7 +262,7 @@ const Preview = () => {
                         Education
                       </h2>
                       {resumeData.education.map((item, index) => (
-                        <div key={index} style={{ marginBottom: `${resumeData.spacing?.entryGap ?? 2}px` }}>
+                        <div key={index} style={{ ...provided.draggableProps.style, marginBottom: `${resumeData.spacing?.entryGap ?? 2}px` }}>
                           <p className="content i-bold" dangerouslySetInnerHTML={{ __html: parseFormatting(item.degree) }} />
                           <p className="content" dangerouslySetInnerHTML={{ __html: parseFormatting(item.school) }} />
                           <DateRange
