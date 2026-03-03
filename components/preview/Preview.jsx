@@ -173,18 +173,19 @@ const Preview = () => {
     }
   };
 
-  // Sync sectionOrder: ensure all custom section IDs are included
+  // Sync sectionOrder: ensure all default + custom section IDs are included
   useEffect(() => {
     const savedOrder = localStorage.getItem('sectionOrder');
     let order;
     if (savedOrder) {
       order = JSON.parse(savedOrder);
-      if (!order.includes("certifications")) {
-        order.push("certifications");
-      }
     } else {
       order = [...defaultSections];
     }
+    // Ensure every default section ID is present (handles stale localStorage)
+    defaultSections.forEach(id => {
+      if (!order.includes(id)) order.push(id);
+    });
     // Append any custom section IDs not yet in order
     const customIds = (resumeData.customSections || []).map(s => s.id).filter(Boolean);
     customIds.forEach(id => {
